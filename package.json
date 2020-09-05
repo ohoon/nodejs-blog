@@ -17,6 +17,6 @@
   "main": "app.js",
   "devDependencies": {},
   "author": "ohoon",
-  "license": "ISC",
+  "license": "MIT",
   "description": ""
 }
