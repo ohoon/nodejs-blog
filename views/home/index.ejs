@@ -6,6 +6,13 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
+
+    <header class="py-5 bg-image-full" style="background-image: url('/images/banner.jpg');">
+      <div class="py-5 container">
+        <h1>웹개발 공부 블로그</h1>
+        <p class="lead">Web Development Study Blog</p>
+      </div>
+    </header>
     
     <!-- Page Content -->
     <div class="container">
@@ -13,43 +20,80 @@
       <div class="row">
 
         <!-- Blog Entries Column -->
-        <div class="col-md-8">
+        <div class="md-8">
 
-          <h1 class="my-4">Page Heading
-            <small>Secondary Text</small>
+          <h1 class="my-4">
+            <small>Recent Posts</small>
           </h1>
 
           <!-- Blog Post -->
           <div class="card mb-4">
-            <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
             <div class="card-body">
-              <h2 class="card-title">Post Title</h2>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-              <a href="#" class="btn btn-primary">Read More &rarr;</a>
+              <div class="row">
+                <div class="col-lg-4">
+                  <a href="#">
+                    <img class="img-fluid rounded" src="http://placehold.it/750x300" alt="">
+                  </a>
+                </div>
+                <div class="col-lg-8">
+                  <h2 class="card-title">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                  <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+              </div>
             </div>
             <div class="card-footer text-muted">
-              Posted on January 1, 2020 by
+              Posted on January 1, 2017 by
               <a href="#">Start Bootstrap</a>
             </div>
           </div>
 
-          <!-- Pagination -->
-          <ul class="pagination justify-content-center mb-4">
-            <li class="page-item">
-              <a class="page-link" href="#">&larr; Older</a>
-            </li>
-            <li class="page-item disabled">
-              <a class="page-link" href="#">Newer &rarr;</a>
-            </li>
-          </ul>
+          
+          <!-- Blog Post -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4">
+                  <a href="#">
+                    <img class="img-fluid rounded" src="http://placehold.it/750x300" alt="">
+                  </a>
+                </div>
+                <div class="col-lg-8">
+                  <h2 class="card-title">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                  <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              Posted on January 1, 2017 by
+              <a href="#">Start Bootstrap</a>
+            </div>
+          </div>
 
-        </div>
+          
+          <!-- Blog Post -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4">
+                  <a href="#">
+                    <img class="img-fluid rounded" src="http://placehold.it/750x300" alt="">
+                  </a>
+                </div>
+                <div class="col-lg-8">
+                  <h2 class="card-title">Post Title</h2>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                  <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              Posted on January 1, 2017 by
+              <a href="#">Start Bootstrap</a>
+            </div>
+          </div>
 
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-          <%- include('../widgets/search') %>
-          <%- include('../widgets/category') %>
-          <%- include('../widgets/side') %>
         </div>
 
       </div>
