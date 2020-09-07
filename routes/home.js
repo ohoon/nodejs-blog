@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const post = require('../models/post');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('home/index', { title: 'Express' });
+/* Home Page. */
+router.get('/', async (req, res, next) => {
+  const posts = await post.find();
+  res.render('home/index', { posts: posts });
 });
 
 module.exports = router;
