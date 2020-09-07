@@ -2,7 +2,7 @@
 <html>
   <head>
     <%- include('../partials/head') %>
-    <title><%= title %></title>
+    <title>Ohoon's Blog</title>
   </head>
   <body>
     <%- include('../partials/nav') %>
@@ -10,28 +10,37 @@
     <!-- Page Content -->
     <div class="container">
 
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3">Blog Home One
+        <small>Subheading</small>
+      </h1>
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/posts">Home</a>
+        </li>
+        <li class="breadcrumb-item active">Blog Home 1</li>
+      </ol>
+
       <div class="row">
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-          <h1 class="my-4">Page Heading
-            <small>Secondary Text</small>
-          </h1>
-
-          <!-- Blog Post -->
-          <div class="card mb-4">
-            <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-            <div class="card-body">
-              <h2 class="card-title">Post Title</h2>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-              <a href="#" class="btn btn-primary">Read More &rarr;</a>
+          <!-- Blog Posts -->
+          <% posts.forEach( (post) => { %>
+            <div class="card mb-4">
+              <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+              <div class="card-body">
+                <h2 class="card-title"><%= post.title %></h2>
+                <p class="card-text"><%= post.content %></p>
+                <a href="/posts/<%= post.id %>" class="btn btn-primary">Read More &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                Posted on <%= post.create_date %> by <%= post.user_id %>
+              </div>
             </div>
-            <div class="card-footer text-muted">
-              Posted on January 1, 2020 by
-              <a href="#">Start Bootstrap</a>
-            </div>
-          </div>
+          <% }); %>
 
           <div class="row mb-4">
 
