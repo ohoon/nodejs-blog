@@ -16,7 +16,13 @@ router.post('/', async (req, res, next) => {
 
 /* Create Post Form. */
 router.get('/new', (req, res, next) => {
-  res.render('posts/new', { title: 'Express' });
+  res.render('posts/new', { });
+})
+
+/* Show Post Content. */
+router.get('/:postId', async (req, res, next) => {
+  const posts = await post.read(req.params.postId);
+  res.render('posts/read', { post: posts[0] });
 })
 
 module.exports = router;
