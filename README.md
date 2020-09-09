@@ -45,3 +45,15 @@
   Read More 버튼을 누르면 글의 id를 Where조건으로 하여 글의 제목, 내용을 추출해서 보여줌
 
   댓글 기능도 마찬가지로 CRUD 이후에 구현 예정
+
+  // 20.09.09
+
+  글 보기 페이지 아래쪽에 Edit, Delete, Back 버튼 추가
+
+  Edit의 경우는 버튼 클릭 시 Edit Form 화면으로 넘어가서 해당 글의 데이터를 불러오고 수정.
+  
+  그 후에 submit하면 HTTP method의 PUT으로 데이터를 받아 Mysql에서 Update 처리하고 해당 글로 redirect
+
+  Delete의 경우는 버튼 클릭 시 삭제하겠냐는 경고창을 띄우고 예. 라고 답할 시 HTTP method의 DELETE로 글 번호를 받아 Mysql에서 Delete 처리하고 글 목록으로 redirect
+
+  다음 작업 때는 간단하게 회원가입과 로그인을 할 수 있도록 구현할 예정
