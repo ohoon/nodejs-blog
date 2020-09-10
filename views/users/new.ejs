@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <title>Ohoon's Blog</title>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Create Form -->
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3 my-4">Sign up</h4>
+
+          <hr class="mb-4">
+
+          <form class="needs-validation" novalidate method="post" action="/users">
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                <div class="invalid-feedback">
+                  Username is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="" required>
+                <div class="invalid-feedback">
+                  Password is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="password_confirm">Password Confirmation</label>
+                <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Password Confirmation" value="" required>
+                <div class="invalid-feedback">
+                  Password Confirmation is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="nickname">Nickname</label>
+                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" required>
+                <div class="invalid-feedback">
+                  Nickname is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-4">
+                <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="YourEmailId@example.com">
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn btn-primary btn-lg btn-block mb-4" type="submit">SIGN UP</button>
+            </div>
+            
+          </form>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
