@@ -8,4 +8,9 @@ router.get('/', async (req, res, next) => {
   res.render('home/index', { posts: posts });
 });
 
+/* Log In Form. */
+router.get('/login', (req, res, next) => {
+  res.render('home/login', { });
+});
+
 module.exports = router;
