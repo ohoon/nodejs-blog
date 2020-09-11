@@ -3,7 +3,7 @@ const router = express.Router();
 const userDao = require('../models/User');
 
 /* Sign Up User. */
-router.post('/', user.encryptPassword, async (req, res, next) => {
+router.post('/', userDao.encryptPassword, async (req, res, next) => {
   await userDao.create(req.body);
   res.redirect('/');
 });
