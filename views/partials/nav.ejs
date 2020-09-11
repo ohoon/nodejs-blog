@@ -17,12 +17,21 @@
                         <a class="dropdown-item" href="/posts">Category 1</a>
                     </div>
                 </li>
-                <li class="nav-item ml-2">
-                    <a href="/login" class="btn btn-secondary btn-sm">Log in</a>
-                </li>
-                <li class="nav-item ml-1">
-                    <a href="/users/signup" class="btn btn-success btn-sm">Sign up</a>
-                </li>
+                <% if (isAuthenticated) { %>
+                    <li class="nav-item ml-2">
+                        <a href="/users/<%= currentUser.username %>" class="nav-link"><%= currentUser.username %></a>
+                    </li>
+                    <li class="nav-item ml-1">
+                        <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item ml-2">
+                        <a href="/login" class="btn btn-secondary btn-sm">Log in</a>
+                    </li>
+                    <li class="nav-item ml-1">
+                        <a href="/users/signup" class="btn btn-success btn-sm">Sign up</a>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </div>

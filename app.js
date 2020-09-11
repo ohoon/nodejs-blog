@@ -9,6 +9,9 @@ const homeRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
+const session = require('./config/session');
+const flash = require('connect-flash');
+const passport = require('./config/passport');
 const app = express();
 
 // view engine setup
@@ -22,6 +25,19 @@ app.use(method_override('_method'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session.config);
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// login check
+app.use( (req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.currentUser = req.user? req.user[0]:{};
+  next();
+});
+
+// routers
 app.use('/', homeRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);

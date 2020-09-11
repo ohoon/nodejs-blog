@@ -10,21 +10,24 @@
     <!-- Page Content -->
     <div class="container text-center">
 
-      <form class="form-signin">
+      <form class="form-signin" action="/login" method="post">
         <a href="/">
           <img class="mb-4 my-2" src="/images/bootstrap-solid.svg" alt="" width="72" height="72">
         </a>
         <h1 class="h3 mb-4 font-weight-normal">Ohoon's Blog</h1>
-        <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" id="username" name="username" class="form-control<%= (inputErrors)&&(inputErrors.username)?' is-invalid':'' %>" placeholder="Username"<%= username?` value=${username}`:' autofocus' %>>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control<%= (inputErrors)&&(inputErrors.password)?' is-invalid':'' %>" placeholder="Password"<%= username?' autofocus':''%>>
         <div class="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        <% if (loginError) { %>
+          <div class="invalid-feedback d-block"><%= loginError %></div>
+        <% } %>
         <p class="mt-5 mb-3 text-muted">&copy; Your Website 2020</p>
       </form>
 
