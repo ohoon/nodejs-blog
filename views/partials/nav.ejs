@@ -19,7 +19,7 @@
                 </li>
                 <% if (isAuthenticated) { %>
                     <li class="nav-item ml-2">
-                        <a href="/users/<%= currentUser.username %>" class="nav-link"><%= currentUser.username %></a>
+                        <a href="/users/<%= currentUser.id %>" class="nav-link"><%= currentUser.nickname %></a>
                     </li>
                     <li class="nav-item ml-1">
                         <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
