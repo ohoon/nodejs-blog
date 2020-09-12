@@ -9,14 +9,32 @@ router.get('/', async (req, res, next) => {
 });
 
 /* Create Post. */
-router.post('/', async (req, res, next) => {
-  const postId = await postDao.create(req.body);
-  res.redirect(`/posts/${postId}`);
-});
+router.post('/',
+  (req, res, next) => {
+    if (!req.body.title) {
+      req.flash('inputDatas', req.body);
+      req.flash('inputErrors', { title: 'Title is required.' });
+      return res.redirect('/posts/new');
+    }
+    if (req.body.category_id === 'none') {
+      req.flash('inputDatas', req.body);
+      req.flash('inputErrors', { category: 'Please select a valid category.' });
+      return res.redirect('/posts/new');
+    }
+    next();
+  },
+  async (req, res, next) => {
+    const postId = await postDao.create(req.body);
+    res.redirect(`/posts/${postId}`);
+  }
+);
 
 /* Create Post Form. */
 router.get('/new', (req, res, next) => {
-  res.render('posts/new', { });
+  res.render('posts/new', {
+    inputDatas: req.flash('inputDatas')[0],
+    inputErrors: req.flash('inputErrors')[0]
+  });
 })
 
 /* Edit Post. */
