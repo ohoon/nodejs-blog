@@ -18,34 +18,34 @@
 
           <hr class="mb-4">
 
-          <form class="needs-validation" novalidate method="post" action="/users">
+          <form method="post" action="/users">
 
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                <label for="username">Username <small>(5-20 words)</small></label>
+                <input type="text" class="form-control<%= (inputErrors)&&(inputErrors.username)?' is-invalid':'' %>" id="username" name="username" placeholder="Username"<%= (inputDatas)&&(inputDatas.username)?` value=${inputDatas.username}`:'' %><%= (!inputErrors)||(inputErrors.username)?' autofocus':'' %>>
                 <div class="invalid-feedback">
-                  Username is required.
+                  <%= (inputErrors)&&(inputErrors.username)?inputErrors.username:'' %>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="" required>
+                <label for="password">Password <small>(8-40 words)</small></label>
+                <input type="password" class="form-control<%= (inputErrors)&&(inputErrors.password)?' is-invalid':'' %>" id="password" name="password" placeholder="Password"<%= (!inputErrors)||(inputErrors.password)?' autofocus':'' %>>
                 <div class="invalid-feedback">
-                  Password is required.
+                  <%= (inputErrors)&&(inputErrors.password)?inputErrors.password:'' %>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="password_confirm">Password Confirmation</label>
-                <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Password Confirmation" value="" required>
+                <label for="password_confirm">Confirm Password</label>
+                <input type="password" class="form-control<%= (inputErrors)&&(inputErrors.confirm_password)?' is-invalid':'' %>" id="confirm_password" name="confirm_password" placeholder="Confirm Password"<%= (!inputErrors)||(inputErrors.confirm_password)?' autofocus':'' %>>
                 <div class="invalid-feedback">
-                  Password Confirmation is required.
+                  <%= (inputErrors)&&(inputErrors.confirm_password)?inputErrors.confirm_password:'' %>
                 </div>
               </div>
             </div>
@@ -53,9 +53,9 @@
             <div class="row">
               <div class="col-md-3 mb-3">
                 <label for="nickname">Nickname</label>
-                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" required>
+                <input type="text" class="form-control<%= (inputErrors)&&(inputErrors.nickname)?' is-invalid':'' %>" id="nickname" name="nickname" placeholder="Nickname"<%= (inputDatas)&&(inputDatas.nickname)?` value=${inputDatas.nickname}`:' autofocus' %>>
                 <div class="invalid-feedback">
-                  Nickname is required.
+                  <%= (inputErrors)&&(inputErrors.nickname)?inputErrors.nickname:'' %>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@
             <div class="row">
               <div class="col-md-5 mb-4">
                 <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="YourEmailId@example.com">
+                <input type="email" class="form-control" id="email" name="email" placeholder="YourEmailId@example.com"<%= (inputDatas)&&(inputDatas.email)?` value=${inputDatas.email}`:' autofocus' %>>
               </div>
             </div>
 

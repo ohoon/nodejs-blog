@@ -4,10 +4,12 @@ const saltRounds = 10;
 
 module.exports = {
     create: async (body) => {
-        await db.query(
+        const newUser = await db.query(
             `INSERT INTO users(username, password, nickname, email) VALUES(?, ?, ?, ?)`
             , [body.username, body.password, body.nickname, body.email]
         );
+
+        return newUser.insertId;
     },
     findById: async (id) => {
         const users = await db.query(
