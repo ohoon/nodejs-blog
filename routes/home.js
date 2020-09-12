@@ -20,14 +20,14 @@ router.get('/login', (req, res, next) => {
 
 /* Log In */
 router.post('/login',
-  async (req, res, next) => {
+  (req, res, next) => {
     if (!req.body.username) {
-      await req.flash('inputErrors', { username: 'error' });
+      req.flash('inputErrors', { username: 'error' });
       res.redirect('/login');
     }
     if (!req.body.password) {
-      await req.flash('username', req.body.username);
-      await req.flash('inputErrors', { password: 'error' });
+      req.flash('username', req.body.username);
+      req.flash('inputErrors', { password: 'error' });
       res.redirect('/login');
     }
 
