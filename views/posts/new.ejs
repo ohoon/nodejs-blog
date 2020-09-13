@@ -3,6 +3,8 @@
   <head>
     <%- include('../partials/head') %>
     <title>Ohoon's Blog</title>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
   </head>
   <body>
     <%- include('../partials/nav') %>
@@ -18,7 +20,7 @@
 
           <hr class="mb-4">
 
-          <form class="needs-validation" novalidate method="post" action="/posts">
+          <form class="needs-validation" action="/posts" method="post">
 
             <div class="row">
               <div class="col-md-9 mb-3">
@@ -45,7 +47,14 @@
             <div class="row">
               <div class="col-md-12 mb-3">
                 <label for="content">Content</label>
-                <textarea class="form-control" id="content" name="content" rows="20" placeholder=""><%= (inputDatas)&&(inputDatas.content)?inputDatas.content:'' %></textarea>
+                <textarea class="form-control" id="content" name="content" placeholder=""><%= (inputDatas)&&(inputDatas.content)?inputDatas.content:'' %></textarea>
+                <script>
+                  ClassicEditor
+                      .create( document.querySelector( '#content' ) )
+                      .catch( err => {
+                          console.error( err );
+                      } );
+                </script>
               </div>
             </div>
 

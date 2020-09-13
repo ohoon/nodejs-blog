@@ -3,6 +3,8 @@
   <head>
     <%- include('../partials/head') %>
     <title>Ohoon's Blog</title>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
   </head>
   <body>
     <%- include('../partials/nav') %>
@@ -12,7 +14,7 @@
 
       <div class="row">
 
-        <!-- Create Form -->
+        <!-- Edit Form -->
         <div class="col-md-12 order-md-1">
           <h4 class="mb-3 my-4">Edit Post</h4>
 
@@ -23,26 +25,32 @@
             <div class="row">
               <div class="col-md-9 mb-3">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="" value="<%= post.title %>" required>
+                <input type="text" class="form-control<%= (inputErrors)&&(inputErrors.title)?' is-invalid':'' %>" id="title" name="title" placeholder=""<%= (inputDatas)?(inputDatas.title)?` value=${inputDatas.title}`:' autofocus':` value=${post.title}` %>>
                 <div class="invalid-feedback">
-                  Title is required.
+                  <%= (inputErrors)&&(inputErrors.title)?inputErrors.title:'' %>
                 </div>
               </div>
               <div class="col-md-3 mb-3">
                 <label for="category">Category</label>
-                <select class="custom-select d-block w-100" id="category" name="category_id" required>
-                  <option value="1">category1</option>
+                <select class="custom-select d-block w-100<%= (inputErrors)&&(inputErrors.category)?' is-invalid':'' %>" id="category" name="category_id">
+                  <option value="1"<%= (inputDatas)?(inputDatas.category_id==1)?' selected':'':(post.category_id==1)?' selected':'' %>>category1</option>
+                  <option value="2"<%= (inputDatas)?(inputDatas.category_id==2)?' selected':'':(post.category_id==2)?' selected':'' %>>category2</option>
+                  <option value="3"<%= (inputDatas)?(inputDatas.category_id==3)?' selected':'':(post.category_id==3)?' selected':'' %>>category3</option>
                 </select>
-                <div class="invalid-feedback">
-                  Please select a valid category.
-                </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-12 mb-3">
                 <label for="content">Content</label>
-                <textarea class="form-control" id="content" name="content" rows="20" placeholder=""><%= post.content %></textarea>
+                <textarea class="form-control" id="content" name="content" placeholder=""><%= (inputDatas)?(inputDatas.content)?inputDatas.content:'':post.content %></textarea>
+                <script>
+                  ClassicEditor
+                      .create( document.querySelector( '#content' ) )
+                      .catch( err => {
+                          console.error( err );
+                      } );
+                </script>
               </div>
             </div>
 
