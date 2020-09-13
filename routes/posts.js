@@ -38,15 +38,29 @@ router.get('/new', (req, res, next) => {
 })
 
 /* Edit Post. */
-router.put('/:postId', async (req, res, next) => {
-  await postDao.modify(req.params.postId, req.body);
-  res.redirect(`/posts/${req.params.postId}`);
-})
+router.put('/:postId',
+  (req, res, next) => {
+    if (!req.body.title) {
+      req.flash('inputDatas', req.body);
+      req.flash('inputErrors', { title: 'Title is required.' });
+      return res.redirect(`/posts/${req.params.postId}/edit`);
+    }
+    next();
+  },
+  async (req, res, next) => {
+    await postDao.modify(req.params.postId, req.body);
+    res.redirect(`/posts/${req.params.postId}`);
+  }
+)
 
 /* Edit Post Form. */
 router.get('/:postId/edit', async (req, res, next) => {
   const posts = await postDao.read(req.params.postId);
-  res.render('posts/edit', { post: posts[0] });
+  res.render('posts/edit', {
+    post: posts[0],
+    inputDatas: req.flash('inputDatas')[0],
+    inputErrors: req.flash('inputErrors')[0]
+  });
 })
 
 /* Delete Post. */
