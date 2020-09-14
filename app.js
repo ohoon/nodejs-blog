@@ -5,6 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const categoryDao = require('./models/Category');
 const homeRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
@@ -34,6 +35,12 @@ app.use(passport.session());
 app.use( (req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.currentUser = req.user? req.user[0]:{};
+  next();
+});
+
+// fetch categories
+app.use( async (req, res, next) => {
+  res.locals.categories = await categoryDao.find();
   next();
 });
 
