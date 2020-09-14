@@ -11,15 +11,17 @@
     <div class="container">
 
       <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">Blog Home One
-        <small>Subheading</small>
+      <h1 class="mt-4 mb-3">
+        <small><%= (category!==undefined)?category.name:'All Posts' %></small>
       </h1>
 
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="/posts">Home</a>
         </li>
-        <li class="breadcrumb-item active">Blog Home 1</li>
+        <% if (category !== undefined) { %>
+          <li class="breadcrumb-item active"><%= category.name %></li>
+        <% } %>
       </ol>
 
       <div class="row">

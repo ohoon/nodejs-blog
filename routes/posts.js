@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const postDao = require('../models/Post');
+const categoryDao = require('../models/Category');
 
 /* Show All Posts. */
 router.get('/', async (req, res, next) => {
   const posts = await postDao.find();
-  res.render('posts/list', { posts: posts });
+  res.render('posts/list', {
+    posts: posts,
+    category: undefined
+  });
 });
 
 /* Create Post. */
@@ -34,6 +38,14 @@ router.get('/new', (req, res, next) => {
   res.render('posts/new', {
     inputDatas: req.flash('inputDatas')[0],
     inputErrors: req.flash('inputErrors')[0]
+  });
+})
+
+router.get('/category/:categoryId', async (req, res, next) => {
+  const posts = await postDao.find(req.params.categoryId);
+  res.render('posts/list', {
+    posts: posts,
+    category: res.locals.categories.find( category => category.id == req.params.categoryId )
   });
 })
 

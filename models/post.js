@@ -9,7 +9,16 @@ module.exports = {
 
         return newPost.insertId;
     },
-    find: async (category) => {
+    find: async (categoryId) => {
+        if (categoryId) {
+            const posts = await db.query(
+                `SELECT * FROM posts WHERE category_id=? ORDER BY create_date DESC`
+                , [categoryId]
+            );
+
+            return posts;
+        }
+        
         const posts = await db.query(
             `SELECT * FROM posts ORDER BY create_date DESC`
         );
