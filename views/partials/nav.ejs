@@ -14,7 +14,9 @@
                         Posts
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        <a class="dropdown-item" href="/posts">Category 1</a>
+                        <% categories.forEach( category => { %>
+                            <a class="dropdown-item" href="/posts/category/<%= category.id %>"><%= category.name %></a>
+                        <% }) %>
                     </div>
                 </li>
                 <% if (isAuthenticated) { %>
