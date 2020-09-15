@@ -5,9 +5,9 @@ const categoryDao = require('../models/Category');
 
 /* Show All Posts. */
 router.get('/', async (req, res, next) => {
-  const posts = await postDao.find();
+  const postsWithUser = await postDao.find();
   res.render('posts/list', {
-    posts: posts,
+    postsWithUser: postsWithUser,
     category: undefined
   });
 });
@@ -27,6 +27,10 @@ router.post('/',
     }
     next();
   },
+  (req, res, next) => {
+    req.body.user_id = req.user[0].id;
+    next();
+  },
   async (req, res, next) => {
     const postId = await postDao.create(req.body);
     res.redirect(`/posts/${postId}`);
@@ -42,9 +46,9 @@ router.get('/new', (req, res, next) => {
 })
 
 router.get('/category/:categoryId', async (req, res, next) => {
-  const posts = await postDao.find(req.params.categoryId);
+  const postsWithUser = await postDao.find(req.params.categoryId);
   res.render('posts/list', {
-    posts: posts,
+    postsWithUser: postsWithUser,
     category: res.locals.categories.find( category => category.id == req.params.categoryId )
   });
 })
@@ -67,9 +71,9 @@ router.put('/:postId',
 
 /* Edit Post Form. */
 router.get('/:postId/edit', async (req, res, next) => {
-  const posts = await postDao.read(req.params.postId);
+  const postsWithUser = await postDao.read(req.params.postId);
   res.render('posts/edit', {
-    post: posts[0],
+    postWithUser: postsWithUser[0],
     inputDatas: req.flash('inputDatas')[0],
     inputErrors: req.flash('inputErrors')[0]
   });
@@ -83,8 +87,8 @@ router.delete('/:postId', async (req, res, next) => {
 
 /* Show Post Content. */
 router.get('/:postId', async (req, res, next) => {
-  const posts = await postDao.read(req.params.postId);
-  res.render('posts/show', { post: posts[0] });
+  const postsWithUser = await postDao.read(req.params.postId);
+  res.render('posts/show', { postWithUser: postsWithUser[0] });
 })
 
 module.exports = router;

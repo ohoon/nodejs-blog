@@ -1,37 +1,37 @@
 const db = require('./db');
 
 module.exports = {
-    create: async (body, user) => {
+    create: async (body) => {
         const newPost = await db.query(
             `INSERT INTO posts(title, content, category_id, user_id, create_date) VALUES(?, ?, ?, ?, NOW())`
-            , [body.title, body.content, body.category_id, 1]
+            , [body.title, body.content, body.category_id, body.user_id]
         );
 
         return newPost.insertId;
     },
     find: async (categoryId) => {
         if (categoryId) {
-            const posts = await db.query(
-                `SELECT * FROM posts WHERE category_id=? ORDER BY create_date DESC`
+            const postsWithUser = await db.query(
+                `SELECT posts.id, title, content, create_date, nickname FROM posts JOIN users ON user_id=users.id WHERE category_id=? ORDER BY create_date DESC`
                 , [categoryId]
             );
 
-            return posts;
+            return postsWithUser;
         }
         
-        const posts = await db.query(
-            `SELECT * FROM posts ORDER BY create_date DESC`
+        const postsWithUser = await db.query(
+            `SELECT posts.id, title, content, create_date, nickname FROM posts JOIN users ON user_id=users.id ORDER BY create_date DESC`
         );
 
-        return posts;
+        return postsWithUser;
     },
     read: async (postId) => {
-        const posts = await db.query(
-            `SELECT * FROM posts WHERE id=?`
+        const postsWithUser = await db.query(
+            `SELECT posts.id, title, content, category_id, create_date, nickname FROM posts JOIN users ON user_id=users.id WHERE posts.id=?`
             , [postId]
         );
         
-        return posts;
+        return postsWithUser;
     },
     modify: async (postId, body) => {
         await db.query(

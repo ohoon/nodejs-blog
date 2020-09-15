@@ -5,8 +5,8 @@ const passport = require('../config/passport');
 
 /* Home Page. */
 router.get('/', async (req, res, next) => {
-  const posts = await postDao.find();
-  res.render('home/index', { posts: posts });
+  const postsWithUser = await postDao.find();
+  res.render('home/index', { postsWithUser: postsWithUser });
 });
 
 /* Log In Form. */

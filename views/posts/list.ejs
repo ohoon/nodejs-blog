@@ -30,16 +30,16 @@
         <div class="col-md-8">
 
           <!-- Blog Posts -->
-          <% posts.forEach( (post) => { %>
+          <% postsWithUser.forEach( (postWithUser) => { %>
             <div class="card mb-4">
               <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
               <div class="card-body">
-                <h2 class="card-title"><%= post.title %></h2>
-                <p class="card-text"><%- post.content %></p>
-                <a href="/posts/<%= post.id %>" class="btn btn-primary">Read More &rarr;</a>
+                <h2 class="card-title"><%= postWithUser.title %></h2>
+                <p class="card-text"><%- postWithUser.content %></p>
+                <a href="/posts/<%= postWithUser.id %>" class="btn btn-primary">Read More &rarr;</a>
               </div>
               <div class="card-footer text-muted">
-                Posted on <%= post.create_date %> by <%= post.user_id %>
+                Posted on <%= postWithUser.create_date %> by <%= postWithUser.nickname %>
               </div>
             </div>
           <% }); %>

@@ -29,7 +29,7 @@
           <hr class="mb-4">
 
           <!-- Blog Posts -->
-          <% posts.forEach( (post) => { %>
+          <% postsWithUser.forEach( (postWithUser) => { %>
             <div class="card mb-4">
               <div class="card-body">
                 <div class="row">
@@ -39,14 +39,14 @@
                     </a>
                   </div>
                   <div class="col-lg-8">
-                    <h2 class="card-title"><%= post.title %></h2>
-                    <p class="card-text"><%- post.content %></p>
-                    <a href="/posts/<%= post.id %>" class="btn btn-primary">Read More &rarr;</a>
+                    <h2 class="card-title"><%= postWithUser.title %></h2>
+                    <p class="card-text"><%- postWithUser.content %></p>
+                    <a href="/posts/<%= postWithUser.id %>" class="btn btn-primary">Read More &rarr;</a>
                   </div>
                 </div>
               </div>
               <div class="card-footer text-muted">
-                Posted on <%= post.create_date %> by <%= post.user_id %>
+                Posted on <%= postWithUser.create_date %> by <%= postWithUser.nickname %>
               </div>
             </div>
           <% }); %>
