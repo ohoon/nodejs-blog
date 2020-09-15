@@ -33,9 +33,9 @@
               <div class="col-md-3 mb-3">
                 <label for="category">Category</label>
                 <select class="custom-select d-block w-100<%= (inputErrors)&&(inputErrors.category)?' is-invalid':'' %>" id="category" name="category_id">
-                  <option value="1"<%= (inputDatas)?(inputDatas.category_id==1)?' selected':'':(postWithUser.category_id==1)?' selected':'' %>>category1</option>
-                  <option value="2"<%= (inputDatas)?(inputDatas.category_id==2)?' selected':'':(postWithUser.category_id==2)?' selected':'' %>>category2</option>
-                  <option value="3"<%= (inputDatas)?(inputDatas.category_id==3)?' selected':'':(postWithUser.category_id==3)?' selected':'' %>>category3</option>
+                  <% categories.forEach( category => { %>
+                    <option value="<%= category.id %>"<%= (inputDatas)?(inputDatas.category_id==category.id)?' selected':'':(postWithUser.category_id==category.id)?' selected':'' %>><%= category.name %></option>
+                  <% }) %>
                 </select>
               </div>
             </div>
