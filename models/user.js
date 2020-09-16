@@ -1,6 +1,4 @@
 const db = require('./db');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 module.exports = {
     create: async (body) => {
@@ -26,13 +24,5 @@ module.exports = {
         );
 
         return users;
-    },
-    encryptPassword: (req, res, next) => {
-        req.body.password = bcrypt.hashSync(req.body.password, saltRounds);
-        
-        return next();
-    },
-    comparePassword: (plaintext, hash) => {
-        return bcrypt.compareSync(plaintext, hash);
     },
 }

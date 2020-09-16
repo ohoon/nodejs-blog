@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userDao = require('../models/User');
+const crypt = require('../utils/crypt');
 
 /* Sign Up User. */
 router.post('/',
@@ -35,7 +36,7 @@ router.post('/',
     
     next();
   },
-  userDao.encryptPassword,
+  crypt.encryptPassword,
   (req, res, next) => {
     if (req.isAuthenticated()) {
       return res.redirect('/');
