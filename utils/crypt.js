@@ -5,7 +5,7 @@ module.exports = {
     encryptPassword: (req, res, next) => {
         req.body.password = bcrypt.hashSync(req.body.password, saltRounds);
         
-        return next();
+        next();
     },
     comparePassword: (plaintext, hash) => {
         return bcrypt.compareSync(plaintext, hash);
