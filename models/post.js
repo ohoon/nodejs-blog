@@ -12,7 +12,7 @@ module.exports = {
     find: async (categoryId) => {
         if (categoryId) {
             const postsWithUser = await db.query(
-                `SELECT posts.id, title, content, create_date, nickname FROM posts JOIN users ON user_id=users.id WHERE category_id=? ORDER BY create_date DESC`
+                `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id WHERE category_id=? ORDER BY create_date DESC`
                 , [categoryId]
             );
 
@@ -20,14 +20,14 @@ module.exports = {
         }
         
         const postsWithUser = await db.query(
-            `SELECT posts.id, title, content, create_date, nickname FROM posts JOIN users ON user_id=users.id ORDER BY create_date DESC`
+            `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id ORDER BY create_date DESC`
         );
 
         return postsWithUser;
     },
     read: async (postId) => {
         const postsWithUser = await db.query(
-            `SELECT posts.id, title, content, category_id, create_date, nickname FROM posts JOIN users ON user_id=users.id WHERE posts.id=?`
+            `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id WHERE posts.id=?`
             , [postId]
         );
         

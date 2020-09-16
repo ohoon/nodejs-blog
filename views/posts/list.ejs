@@ -63,7 +63,9 @@
 
             <!-- New Post Button-->
             <div class="col-md-2">
-              <a href="/posts/new" class="btn btn-primary">New</a>
+              <% if (isAuthenticated) { %>
+                <a href="/posts/new" class="btn btn-primary">New</a>
+              <% } %>
             </div>
 
           </div>
