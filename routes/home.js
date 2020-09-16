@@ -10,13 +10,21 @@ router.get('/', async (req, res, next) => {
 });
 
 /* Log In Form. */
-router.get('/login', (req, res, next) => {
-  res.render('home/login', {
-    username: req.flash('username')[0],
-    inputErrors: req.flash('inputErrors')[0],
-    loginError: req.flash('error')[0]
-  });
-});
+router.get('/login',
+  (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return res.redirect('/');
+    }
+    next();
+  },
+  (req, res, next) => {
+    res.render('home/login', {
+      username: req.flash('username')[0],
+      inputErrors: req.flash('inputErrors')[0],
+      loginError: req.flash('error')[0]
+    });
+  }
+);
 
 /* Log In */
 router.post('/login',
@@ -41,9 +49,17 @@ router.post('/login',
 );
 
 /* Log Out */
-router.get('/logout', (req, res, next) => {
-  req.logout();
-  res.redirect('/');
-})
+router.get('/logout',
+  (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      return res.redirect('/');
+    }
+    next();
+  },
+  (req, res, next) => {
+    req.logout();
+    res.redirect('/');
+  }
+);
 
 module.exports = router;

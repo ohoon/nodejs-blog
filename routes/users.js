@@ -36,6 +36,12 @@ router.post('/',
     next();
   },
   userDao.encryptPassword,
+  (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return res.redirect('/');
+    }
+    next();
+  },
   async (req, res, next) => {
     const userId = await userDao.create(req.body);
     const users = await userDao.findById(userId);
