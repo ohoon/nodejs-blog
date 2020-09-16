@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const postDao = require('../models/Post');
 const control = require('../utils/control');
+const input = require('../utils/input');
 
 /* Show All Posts. */
 router.get('/', async (req, res, next) => {
@@ -15,19 +16,7 @@ router.get('/', async (req, res, next) => {
 /* Create Post. */
 router.post('/',
   control.isLoggedIn,
-  (req, res, next) => {
-    if (!req.body.title) {
-      req.flash('inputDatas', req.body);
-      req.flash('inputErrors', { title: 'Title is required.' });
-      return res.redirect('/posts/new');
-    }
-    if (req.body.category_id === 'none') {
-      req.flash('inputDatas', req.body);
-      req.flash('inputErrors', { category: 'Please select a valid category.' });
-      return res.redirect('/posts/new');
-    }
-    next();
-  },
+  input.checkCreatePost,
   (req, res, next) => {
     req.body.user_id = req.user[0].id;
     next();
@@ -62,14 +51,7 @@ router.get('/category/:categoryId', async (req, res, next) => {
 router.put('/:postId',
   control.isLoggedIn,
   control.checkAuthorPermission,
-  (req, res, next) => {
-    if (!req.body.title) {
-      req.flash('inputDatas', req.body);
-      req.flash('inputErrors', { title: 'Title is required.' });
-      return res.redirect(`/posts/${req.params.postId}/edit`);
-    }
-    next();
-  },
+  input.checkEditPost,
   async (req, res, next) => {
     await postDao.modify(req.params.postId, req.body);
     res.redirect(`/posts/${req.params.postId}`);

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const postDao = require('../models/Post');
 const passport = require('../config/passport');
+const input = require('../utils/input');
 
 /* Home Page. */
 router.get('/', async (req, res, next) => {
@@ -28,19 +29,7 @@ router.get('/login',
 
 /* Log In */
 router.post('/login',
-  (req, res, next) => {
-    if (!req.body.username) {
-      req.flash('inputErrors', { username: 'error' });
-      res.redirect('/login');
-    }
-    if (!req.body.password) {
-      req.flash('username', req.body.username);
-      req.flash('inputErrors', { password: 'error' });
-      res.redirect('/login');
-    }
-
-    next();
-  },
+  input.checkLogIn,
   passport.authenticate('local-login', {
     successRedirect: '/',
     failureRedirect: '/login',
