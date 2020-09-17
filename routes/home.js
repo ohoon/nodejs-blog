@@ -6,7 +6,9 @@ const input = require('../utils/input');
 
 /* Home Page. */
 router.get('/', async (req, res, next) => {
-  const postsWithUser = await postDao.find();
+  const page = 1;
+  const limit = 3;
+  const postsWithUser = await postDao.find(0, page, limit);
   res.render('home/index', { postsWithUser: postsWithUser });
 });
 

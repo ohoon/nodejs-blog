@@ -52,11 +52,22 @@
             <!-- Pagination -->
             <div class="col-md-8">
               <ul class="pagination justify-content-center mb-4">
-                <li class="page-item">
-                  <a class="page-link" href="#">&larr; Older</a>
+                <% 
+                const startPage = Math.floor((page-1)/10)*10+1;
+                const endPage = Math.min(Math.ceil(page/10)*10, maxPage);
+                const previous = Math.max(startPage-1, 1);
+                const next = Math.min(endPage+1, maxPage);
+                %>
+                <li class="page-item<%= (previous===startPage)?` disabled`:`` %>">
+                  <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?page=<%= previous %>">«</a>
                 </li>
-                <li class="page-item disabled">
-                  <a class="page-link" href="#">Newer &rarr;</a>
+                <% for (let i=startPage; i<=endPage; i++) { %>
+                  <li class="page-item<%= (i===page)?` active`:`` %>">
+                    <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?page=<%= i %>"><%= i %></a>
+                  </li>
+                <% } %>
+                <li class="page-item<%= (next===endPage)?` disabled`:`` %>">
+                  <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?page=<%= next %>">»</a>
                 </li>
               </ul>
             </div>

@@ -6,10 +6,16 @@ const input = require('../utils/input');
 
 /* Show All Posts. */
 router.get('/', async (req, res, next) => {
-  const postsWithUser = await postDao.find();
+  const page = parseInt(req.query.page) || 1;
+  const limit = 5;
+  const count = await postDao.count(0);
+  const maxPage = Math.ceil( count[0].postNum / limit );
+  const postsWithUser = await postDao.find(0, page, limit);
   res.render('posts/list', {
     postsWithUser: postsWithUser,
-    category: undefined
+    category: undefined,
+    page: page,
+    maxPage: maxPage
   });
 });
 
@@ -40,10 +46,16 @@ router.get('/new',
 
 /* Show Posts Filtered By Category */
 router.get('/category/:categoryId', async (req, res, next) => {
-  const postsWithUser = await postDao.find(req.params.categoryId);
+  const page = parseInt(req.query.page) || 1;
+  const limit = 5;
+  const count = await postDao.count(req.params.categoryId);
+  const maxPage = ( count[0].postNum / limit ) + 1;
+  const postsWithUser = await postDao.find(req.params.categoryId, page, limit);
   res.render('posts/list', {
     postsWithUser: postsWithUser,
-    category: res.locals.categories.find( category => category.id == req.params.categoryId )
+    category: res.locals.categories.find( category => category.id == req.params.categoryId ),
+    page: page,
+    maxPage: maxPage
   });
 });
 
