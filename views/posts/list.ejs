@@ -59,15 +59,15 @@
                 const next = Math.min(endPage+1, maxPage);
                 %>
                 <li class="page-item<%= (previous===startPage)?` disabled`:`` %>">
-                  <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?page=<%= previous %>">«</a>
+                  <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?<%= search?`search=${search}&`:`` %>page=<%= previous %>">«</a>
                 </li>
                 <% for (let i=startPage; i<=endPage; i++) { %>
                   <li class="page-item<%= (i===page)?` active`:`` %>">
-                    <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?page=<%= i %>"><%= i %></a>
+                    <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?<%= search?`search=${search}&`:`` %>page=<%= i %>"><%= i %></a>
                   </li>
                 <% } %>
                 <li class="page-item<%= (next===endPage)?` disabled`:`` %>">
-                  <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?page=<%= next %>">»</a>
+                  <a class="page-link" href="/posts<%= (category!==undefined)?`/category/${category.id}`:`/` %>?<%= search?`search=${search}&`:`` %>page=<%= next %>">»</a>
                 </li>
               </ul>
             </div>

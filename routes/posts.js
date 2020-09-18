@@ -6,16 +6,18 @@ const input = require('../utils/input');
 
 /* Show All Posts. */
 router.get('/', async (req, res, next) => {
+  const search = req.query.search;
   const page = parseInt(req.query.page) || 1;
   const limit = 5;
-  const count = await postDao.count(0);
+  const count = await postDao.count(0, search);
   const maxPage = Math.ceil( count[0].postNum / limit );
-  const postsWithUser = await postDao.find(0, page, limit);
+  const postsWithUser = await postDao.find(0, page, limit, search);
   res.render('posts/list', {
     postsWithUser: postsWithUser,
     category: undefined,
+    search: search,
     page: page,
-    maxPage: maxPage
+    maxPage: maxPage,
   });
 });
 
@@ -46,16 +48,18 @@ router.get('/new',
 
 /* Show Posts Filtered By Category */
 router.get('/category/:categoryId', async (req, res, next) => {
+  const search = req.query.search;
   const page = parseInt(req.query.page) || 1;
   const limit = 5;
-  const count = await postDao.count(req.params.categoryId);
-  const maxPage = ( count[0].postNum / limit ) + 1;
-  const postsWithUser = await postDao.find(req.params.categoryId, page, limit);
+  const count = await postDao.count(req.params.categoryId, search);
+  const maxPage = Math.ceil( count[0].postNum / limit );
+  const postsWithUser = await postDao.find(req.params.categoryId, page, limit, search);
   res.render('posts/list', {
     postsWithUser: postsWithUser,
     category: res.locals.categories.find( category => category.id == req.params.categoryId ),
+    search: search,
     page: page,
-    maxPage: maxPage
+    maxPage: maxPage,
   });
 });
 
@@ -98,7 +102,11 @@ router.delete('/:postId',
 router.get('/:postId',
   async (req, res, next) => {
     const postsWithUser = await postDao.read(req.params.postId);
-    res.render('posts/show', { postWithUser: postsWithUser[0] });
+    res.render('posts/show', {
+      postWithUser: postsWithUser[0],
+      category: res.locals.categories.find( category => category.id == postsWithUser[0].category_id ),
+      search: undefined
+    });
   }
 );
 
