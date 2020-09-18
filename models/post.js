@@ -9,21 +9,31 @@ module.exports = {
 
         return newPost.insertId;
     },
-    find: async (categoryId, page, limit) => {
+    find: async (categoryId, page, limit, search) => {
+        let queryText = `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id`
+        const queryValue = [];
         const offset = (page-1) * limit;
 
-        if (categoryId === 0) {
-            const postsWithUser = await db.query(
-                `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id ORDER BY create_date DESC LIMIT ?, ?`,
-                [offset, limit]
-            );
-    
-            return postsWithUser;
+
+        if (categoryId > 0) {
+            queryText = queryText + ` WHERE category_id=?`;
+            queryValue.push(categoryId);
         }
-        
+
+        if (search) {
+            queryText = queryText + ((categoryId>0)?` AND`:` WHERE`);
+            queryText = queryText + ` (title LIKE ? OR content LIKE ?)`;
+            queryValue.push(`%${search}%`, `%${search}%`);
+        }
+    
+        if (page && limit) {
+            queryText = queryText + ` ORDER BY create_date DESC LIMIT ?, ?`;
+            queryValue.push(offset, limit);
+        }
+
         const postsWithUser = await db.query(
-            `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id WHERE category_id=? ORDER BY create_date DESC LIMIT ?, ?`
-            , [categoryId, offset, limit]
+            queryText,
+            queryValue
         );
 
         return postsWithUser;
@@ -48,18 +58,24 @@ module.exports = {
             , [postId]
         );
     },
-    count: async (categoryId) => {
-        if (categoryId === 0) {
-            const postNum = await db.query(
-                `SELECT COUNT(*) AS postNum FROM posts`
-            );
-            
-            return postNum;
+    count: async (categoryId, search) => {
+        let queryText = 'SELECT COUNT(*) AS postNum FROM posts';
+        const queryValue = [];
+        
+        if (categoryId > 0) {
+            queryText = queryText + ` WHERE category_id=?`;
+            queryValue.push(categoryId);
         }
 
+        if (search) {
+            queryText = queryText + ((categoryId>0)?` AND`:` WHERE`);
+            queryText = queryText + ` (title LIKE ? OR content LIKE ?)`;
+            queryValue.push(`%${search}%`, `%${search}%`);
+        }
+        
         const postNum = await db.query(
-            `SELECT COUNT(*) AS postNum FROM posts WHERE category_id=?`
-            , [categoryId]
+            queryText
+            , queryValue
         );
         
         return postNum;
