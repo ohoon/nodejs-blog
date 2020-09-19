@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const postDao = require('../models/Post');
+const commentDao = require('../models/Comment');
 const control = require('../utils/control');
 const input = require('../utils/input');
 
@@ -98,13 +99,18 @@ router.delete('/:postId',
   }
 );
 
-/* Show Post Content. */
+/* Read Post. */
 router.get('/:postId',
   async (req, res, next) => {
-    const postsWithUser = await postDao.read(req.params.postId);
+    const postsAndCommentsWithUser = await Promise.all([
+      postDao.read(req.params.postId),
+      commentDao.find(req.params.postId)
+    ]);
+    
     res.render('posts/show', {
-      postWithUser: postsWithUser[0],
-      category: res.locals.categories.find( category => category.id == postsWithUser[0].category_id ),
+      postWithUser: postsAndCommentsWithUser[0][0],
+      commentsWithUser: postsAndCommentsWithUser[1],
+      category: res.locals.categories.find( category => category.id == postsAndCommentsWithUser[0][0].category_id ),
       search: undefined
     });
   }
