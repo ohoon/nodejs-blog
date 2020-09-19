@@ -8,10 +8,24 @@ module.exports = {
     },
     find: async (postId) => {
         const commentsWithUser = await db.query(
-            `SELECT comments.id, content, user_id, nickname, parent_comment_id, create_date FROM comments JOIN users ON user_id=users.id WHERE post_id=? ORDER BY create_date DESC`
+            `SELECT comments.id, content, user_id, nickname, parent_comment_id, isDeleted, create_date FROM comments JOIN users ON user_id=users.id WHERE post_id=? ORDER BY create_date ASC`
             , [postId]
         );
         
         return commentsWithUser;
+    },
+    read: async (commentId) => {
+        const commentsWithUser = await db.query(
+            `SELECT comments.id, content, user_id, nickname, parent_comment_id, isDeleted, create_date FROM comments JOIN users ON user_id=users.id WHERE comments.id=?`
+            , [commentId]
+        );
+
+        return commentsWithUser;
+    },
+    destroy: async (commentId) => {
+        await db.query(
+            `UPDATE comments SET isDeleted=? WHERE id=?`
+            , [1, commentId]
+        );
     },
 }
