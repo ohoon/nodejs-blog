@@ -1,4 +1,5 @@
 const postDao = require('../models/Post');
+const commentDao = require('../models/Comment');
 
 module.exports = {
     isLoggedIn: (req, res, next) => {
@@ -9,18 +10,28 @@ module.exports = {
         next();
     },
     checkAuthorPermission: async (req, res, next) => {
-        const posts = await postDao.read(req.params.postId);
-        const userId = posts[0].user_id;
+        const postsWithUser = await postDao.read(req.params.postId);
+        const userId = postsWithUser[0].user_id;
 
         if (userId !== req.user[0].id) {
             return res.redirect('/');
         }
         next();
     },
-    checkPostId: async (req, res, next) => {
-        const posts = await postDao.read(req.query.postId);
+    checkCommentAuthorPermission: async (req, res, next) => {
+        const commentsWithUser = await commentDao.read(req.params.commentId);
+        const userId = commentsWithUser[0].user_id;
+        const postId = commentsWithUser[0].post_id;
 
-        if (posts.length === 0) {
+        if (userId !== req.user[0].id) {
+            return res.redirect(`/posts/${postId}`);
+        }
+        next();
+    },
+    checkPostId: async (req, res, next) => {
+        const postsWithUser = await postDao.read(req.query.postId);
+
+        if (postsWithUser.length === 0) {
             return res.redirect(`/posts/`);
         }
         next();
