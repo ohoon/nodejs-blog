@@ -26,8 +26,10 @@ module.exports = {
             queryValue.push(`%${search}%`, `%${search}%`);
         }
     
+        queryText = queryText + ` ORDER BY create_date DESC`;
+        
         if (page && limit) {
-            queryText = queryText + ` ORDER BY create_date DESC LIMIT ?, ?`;
+            queryText = queryText + ` LIMIT ?, ?`;
             queryValue.push(offset, limit);
         }
 
