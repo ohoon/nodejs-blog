@@ -21,4 +21,15 @@ router.post('/',
   }
 );
 
+/* Delete Comment. */
+router.delete('/:commentId',
+  control.isLoggedIn,
+  control.checkCommentAuthorPermission,
+  control.checkPostId,
+  async (req, res, next) => {
+    await commentDao.destroy(req.params.commentId);
+    res.redirect(`/posts/${req.query.postId}`);
+  }
+);
+
 module.exports = router;
