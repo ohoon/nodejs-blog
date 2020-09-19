@@ -17,4 +17,12 @@ module.exports = {
         }
         next();
     },
+    checkPostId: async (req, res, next) => {
+        const posts = await postDao.read(req.query.postId);
+
+        if (posts.length === 0) {
+            return res.redirect(`/posts/`);
+        }
+        next();
+    }
 }

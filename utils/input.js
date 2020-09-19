@@ -66,4 +66,13 @@ module.exports = {
 
         next();
     },
+    checkCreateComment: (req, res, next) => {
+      if (!req.body.content) {
+        req.flash('inputDatas', req.body);
+        req.flash('inputErrors', { content: 'Content is required.' });
+        return res.redirect(`/posts/${req.query.postId}`);
+      }
+      
+      next();
+  },
 }
