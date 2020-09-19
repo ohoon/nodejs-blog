@@ -69,8 +69,12 @@ router.put('/:postId',
   control.isLoggedIn,
   control.checkAuthorPermission,
   input.checkEditPost,
+  (req, res, next) => {
+    req.body.post_id = req.params.postId;
+    next();
+  },
   async (req, res, next) => {
-    await postDao.modify(req.params.postId, req.body);
+    await postDao.modify(req.body);
     res.redirect(`/posts/${req.params.postId}`);
   }
 );
@@ -111,7 +115,8 @@ router.get('/:postId',
       postWithUser: postsAndCommentsWithUser[0][0],
       commentsWithUser: postsAndCommentsWithUser[1],
       category: res.locals.categories.find( category => category.id == postsAndCommentsWithUser[0][0].category_id ),
-      search: undefined
+      search: undefined,
+      inputErrors: req.flash('inputErrors')[0]
     });
   }
 );

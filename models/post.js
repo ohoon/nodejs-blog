@@ -48,10 +48,10 @@ module.exports = {
         
         return postsWithUser;
     },
-    modify: async (postId, body) => {
+    modify: async (body) => {
         await db.query(
             `UPDATE posts SET title=?, content=?, category_id=?, create_date=Now() WHERE id=?`
-            , [body.title, body.content, body.category_id, postId]
+            , [body.title, body.content, body.category_id, body.post_id]
         );
     },
     destroy: async (postId) => {
