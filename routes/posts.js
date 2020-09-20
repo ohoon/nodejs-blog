@@ -4,6 +4,7 @@ const postDao = require('../models/Post');
 const commentDao = require('../models/Comment');
 const control = require('../utils/control');
 const input = require('../utils/input');
+const structure = require('../utils/structure');
 
 /* Show All Posts. */
 router.get('/', async (req, res, next) => {
@@ -110,10 +111,14 @@ router.get('/:postId',
       postDao.read(req.params.postId),
       commentDao.find(req.params.postId)
     ]);
+
+    const postWithUser = postsAndCommentsWithUser[0][0];
+    const commentsWithUser = postsAndCommentsWithUser[1];
+    const commentTrees = structure.convertToTrees(commentsWithUser, 'id', 'parent_comment_id', 'childern_comments');
     
     res.render('posts/show', {
-      postWithUser: postsAndCommentsWithUser[0][0],
-      commentsWithUser: postsAndCommentsWithUser[1],
+      postWithUser: postWithUser,
+      commentsWithUser: commentTrees,
       category: res.locals.categories.find( category => category.id == postsAndCommentsWithUser[0][0].category_id ),
       search: undefined,
       inputErrors: req.flash('inputErrors')[0]

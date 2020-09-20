@@ -12,7 +12,6 @@ router.post('/',
   (req, res, next) => {
     req.body.post_id = req.query.postId;
     req.body.user_id = req.user[0].id;
-    req.body.parent_comment_id = req.query.parentId?req.query.parentId:null;
     next();
   },
   async (req, res, next) => {
