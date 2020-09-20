@@ -1,4 +1,4 @@
-<div id="comment-<%= commentWithUser.id %>">
+<div id="comment-<%= commentWithUser.id %>"<%= (inputErrors)&&(inputErrors.comment)&&(inputErrors.parent)&&(inputErrors.parent == commentWithUser.id)?' class=comment-reply-enabled':'' %>>
     <div class="media">
         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
         <div class="media-body">
