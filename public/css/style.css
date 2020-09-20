@@ -46,3 +46,10 @@ a {
 .ck-editor__editable_inline {
     min-height: 478px;
 }
+
+.comment-reply {
+  display:none;
+}
+.comment-reply-enabled .comment-reply {
+  display:inherit;
+}
