@@ -49,7 +49,7 @@
                     </div>
                 </div>
             <% } %>
-            <h5 class="mt-5">Comments</h5>
+            <h5 class="mt-5">Comments<%- (commentNum>0)?` <small>(${commentNum})</small>`:`` %></h5>
             <hr>
             <!-- Comments Content -->
             <% commentsWithUser.forEach( (commentWithUser) => { %>

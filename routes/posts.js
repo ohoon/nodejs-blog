@@ -115,10 +115,12 @@ router.get('/:postId',
     const postWithUser = postsAndCommentsWithUser[0][0];
     const commentsWithUser = postsAndCommentsWithUser[1];
     const commentTrees = structure.convertToTrees(commentsWithUser, 'id', 'parent_comment_id', 'childern_comments');
+    const commentNum = commentsWithUser.length;
     
     res.render('posts/show', {
       postWithUser: postWithUser,
       commentsWithUser: commentTrees,
+      commentNum: commentNum,
       category: res.locals.categories.find( category => category.id == postsAndCommentsWithUser[0][0].category_id ),
       search: undefined,
       inputErrors: req.flash('inputErrors')[0]
