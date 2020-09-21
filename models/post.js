@@ -33,6 +33,8 @@ module.exports = {
             queryValue.push(offset, limit);
         }
 
+        queryText = `SELECT p.*, COUNT(c.id) AS commentNum FROM (${queryText}) AS p LEFT OUTER JOIN comments AS c ON p.id=c.post_id GROUP BY p.id`;
+
         const postsWithUser = await db.query(
             queryText,
             queryValue
