@@ -107,6 +107,7 @@ router.delete('/:postId',
 /* Read Post. */
 router.get('/:postId',
   async (req, res, next) => {
+    await postDao.watch(req.params.postId);
     const postsAndCommentsWithUser = await Promise.all([
       postDao.read(req.params.postId),
       commentDao.find(req.params.postId)
