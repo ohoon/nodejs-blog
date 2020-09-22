@@ -10,7 +10,7 @@ module.exports = {
         return newPost.insertId;
     },
     find: async (categoryId, page, limit, search) => {
-        let queryText = `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id`
+        let queryText = `SELECT posts.id, title, content, category_id, user_id, nickname, create_date, views FROM posts JOIN users ON user_id=users.id`
         const queryValue = [];
         const offset = (page-1) * limit;
 
@@ -44,7 +44,7 @@ module.exports = {
     },
     read: async (postId) => {
         const postsWithUser = await db.query(
-            `SELECT posts.id, title, content, category_id, user_id, nickname, create_date FROM posts JOIN users ON user_id=users.id WHERE posts.id=?`
+            `SELECT posts.id, title, content, category_id, user_id, nickname, create_date, views FROM posts JOIN users ON user_id=users.id WHERE posts.id=?`
             , [postId]
         );
         
@@ -83,5 +83,11 @@ module.exports = {
         );
         
         return postNum;
+    },
+    watch: async (postId) => {
+        await db.query(
+            `UPDATE posts SET views=views+1 WHERE id=?`
+            , [postId]
+        );
     }
 }
