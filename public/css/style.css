@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap');
+
 body {
   height: 100%;
   padding-top: 45px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Nanum Gothic', sans-serif;
 }
 
 a {
@@ -19,9 +21,11 @@ a {
   padding: 30px;
   margin: auto;
 }
+
 .form-signin .checkbox {
   font-weight: 400;
 }
+
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
@@ -29,14 +33,17 @@ a {
   padding: 10px;
   font-size: 16px;
 }
+
 .form-signin .form-control:focus {
   z-index: 2;
 }
+
 .form-signin input[type="text"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
@@ -44,12 +51,56 @@ a {
 }
 
 .ck-editor__editable_inline {
-    min-height: 478px;
+  min-height: 478px;
+}
+
+.card-body .card-title {
+  color: #000000;
+  text-decoration: none;
+  display: -webkit-box;
+  max-height: 3.0em;
+  line-height: 1.5;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card-body .card-title:hover {
+  color: #000000;
+  text-decoration: none;
+}
+
+.card-body .card-text {
+  display: -webkit-box;
+  height: 4.5em;
+  line-height: 1.5;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.post-head .post-title {
+  display: -webkit-box;
+  max-height: 2.4em;
+  line-height: 1.2;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .comment-reply {
   display:none;
 }
+
 .comment-reply-enabled .comment-reply {
   display:inherit;
 }
