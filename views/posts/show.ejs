@@ -16,10 +16,10 @@
         <div class="col-lg-8">
             
             <!-- Post Head -->
-            <div class="mb-4">
+            <div class="post-head mb-4">
 
                 <!-- Title -->
-                <h1 class="mt-4"><%= postWithUser.title %></h1>
+                <h1 class="post-title my-4"><%= postWithUser.title %></h1>
 
                 <!-- Date/Time & Author -->
                 <p>Posted on <%= postWithUser.create_date %> by <%= postWithUser.nickname %> | Watched <%= postWithUser.views %> times</p>
@@ -29,10 +29,7 @@
             <hr>
 
             <!-- Post Body -->
-            <div class="mb-4">
-
-                <!-- Preview Image -->
-                <img class="img-fluid rounded mb-4" src="http://placehold.it/900x300" alt="">
+            <div class="my-4">
 
                 <!-- Post Content -->
                 <%- postWithUser.content %>

@@ -32,11 +32,10 @@
           <!-- Blog Posts -->
           <% postsWithUser.forEach( (postWithUser) => { %>
             <div class="card mb-4">
-              <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
               <div class="card-body">
-                <h2 class="card-title"><%= postWithUser.title %><%- (postWithUser.commentNum>0)?` <small>(${postWithUser.commentNum})</small>`:`` %></h2>
-                <p class="card-text"><%- postWithUser.content %></p>
-                <a href="/posts/<%= postWithUser.id %>" class="btn btn-primary">Read More &rarr;</a>
+                <h2><a class="card-title" href="/posts/<%= postWithUser.id %>"><%= postWithUser.title %><%- (postWithUser.commentNum>0)?` <small>(${postWithUser.commentNum})</small>`:`` %></a></h2>
+                <% postWithUser.content = postWithUser.content.replace(/<br>/ig, " ").replace(/&nbsp;/ig, " ").replace(/(<([^>]+)>)/ig,""); %>
+                <p class="card-text"><%= postWithUser.content %></p>
               </div>
               <div class="card-footer text-muted">
                 Posted on <%= postWithUser.create_date %> by <%= postWithUser.nickname %> | Watched <%= postWithUser.views %> times

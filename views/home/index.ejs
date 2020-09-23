@@ -33,15 +33,10 @@
             <div class="card mb-4">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-lg-4">
-                    <a href="#">
-                      <img class="img-fluid rounded" src="http://placehold.it/750x300" alt="">
-                    </a>
-                  </div>
-                  <div class="col-lg-8">
-                    <h2 class="card-title"><%= postWithUser.title %><%- (postWithUser.commentNum>0)?` <small>(${postWithUser.commentNum})</small>`:`` %></h2>
-                    <p class="card-text"><%- postWithUser.content %></p>
-                    <a href="/posts/<%= postWithUser.id %>" class="btn btn-primary">Read More &rarr;</a>
+                  <div class="col-lg-12">
+                    <h2><a class="card-title" href="/posts/<%= postWithUser.id %>"><%= postWithUser.title %><%- (postWithUser.commentNum>0)?` <small>(${postWithUser.commentNum})</small>`:`` %></a></h2>
+                    <% postWithUser.content = postWithUser.content.replace(/<br>/ig, " ").replace(/&nbsp;/ig, " ").replace(/(<([^>]+)>)/ig,""); %>
+                    <p class="card-text"><%= postWithUser.content %></p>
                   </div>
                 </div>
               </div>
