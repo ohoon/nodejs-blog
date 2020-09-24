@@ -1,0 +1,8 @@
+<form action="/posts/<%= category?`category/${category.id}`:`` %>" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" id="search" name="search" placeholder="Search for..." value="<%= search?search:'' %>">
+        <span class="input-group-append">
+            <button type="submit" class="btn btn-secondary">Go!</button>
+        </span>
+    </div>
+</form>
