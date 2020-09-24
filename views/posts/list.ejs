@@ -8,14 +8,21 @@
     <%- include('../partials/nav') %>
     
     <!-- Page Content -->
-    <div class="container">
+    <div class="container mt-2 mb-5">
 
       <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">
-        <small><%= (category!==undefined)?category.name:'All Posts' %></small>
-      </h1>
+      <div class="row mb-2">
+        <div class="col-md-8 mt-3">
+          <h1>
+            <small><%= (category!==undefined)?category.name:'All Posts' %></small>
+          </h1>
+        </div>
+        <div class="col-md-4 mt-4">
+          <%- include('./partials/search') %>
+        </div>
+      </div>
 
-      <ol class="breadcrumb">
+      <ol class="breadcrumb mb-5">
         <li class="breadcrumb-item">
           <a href="/posts">Home</a>
         </li>
@@ -27,29 +34,38 @@
       <div class="row">
 
         <!-- Blog Entries Column -->
-        <div class="col-md-8">
+        <div class="col-md-12">
 
           <!-- Blog Posts -->
           <% postsWithUser.forEach( (postWithUser) => { %>
-            <div class="card mb-4">
-              <div class="card-body">
-                <h2><a class="card-title" href="/posts/<%= postWithUser.id %>"><%= postWithUser.title %><%- (postWithUser.commentNum>0)?` <small>(${postWithUser.commentNum})</small>`:`` %></a></h2>
-                <% postWithUser.content = postWithUser.content.replace(/<br>/ig, " ").replace(/&nbsp;/ig, " ").replace(/(<([^>]+)>)/ig,""); %>
-                <p class="card-text"><%= postWithUser.content %></p>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="post-list">
+                  <h4><a class="post-title mb-3" href="/posts/<%= postWithUser.id %>"><%= postWithUser.title %></a></h4>
+                  <% postWithUser.content = postWithUser.content.replace(/<br>/ig, " ").replace(/&nbsp;/ig, " ").replace(/(<([^>]+)>)/ig,""); %>
+                  <p class="post-text mb-4"><%= postWithUser.content %></p>
+                  <p class="text-muted">
+                    <small>
+                      <i class="far fa-clock"></i> <%= postWithUser.create_date.split(' ')[0] %>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-user"></i> <%= postWithUser.nickname %>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-comments"></i> <%= postWithUser.commentNum %>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-eye"></i> <%= postWithUser.views %>                  
+                    </small>
+                  </p>
+                </div>
               </div>
-              <div class="card-footer text-muted">
-                Posted on <%= postWithUser.create_date %> by <%= postWithUser.nickname %> | Watched <%= postWithUser.views %> times
+              <div class="col-md-3">
+                <img src="/images/no_detail_img.gif" style="filter:brightness(95%);" width="240px" height="170px" alt>
               </div>
             </div>
+            
+            <hr class="my-4">
           <% }); %>
 
-          <div class="row mb-4">
+          <div class="row my-4">
 
             <!-- Empty -->
-            <div class="col-md-2"></div>
+            <div class="col-md-1"></div>
 
             <!-- Pagination -->
-            <div class="col-md-8">
+            <div class="col-md-10">
               <ul class="pagination justify-content-center mb-4">
                 <% 
                 const startPage = Math.floor((page-1)/10)*10+1;
@@ -72,7 +88,7 @@
             </div>
 
             <!-- New Post Button-->
-            <div class="col-md-2">
+            <div class="col-md-1">
               <% if (isAuthenticated) { %>
                 <a href="/posts/new" class="btn btn-primary">New</a>
               <% } %>
@@ -80,13 +96,6 @@
 
           </div>
 
-        </div>
-
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-          <%- include('../widgets/search') %>
-          <%- include('../widgets/category') %>
-          <%- include('../widgets/side') %>
         </div>
 
       </div>

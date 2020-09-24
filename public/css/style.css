@@ -54,7 +54,7 @@ a {
   min-height: 478px;
 }
 
-.card-body .card-title {
+.post-list .post-title {
   color: #000000;
   text-decoration: none;
   display: -webkit-box;
@@ -68,12 +68,12 @@ a {
   -webkit-box-orient: vertical;
 }
 
-.card-body .card-title:hover {
+.post-list .post-title:hover {
   color: #000000;
   text-decoration: none;
 }
 
-.card-body .card-text {
+.post-list .post-text {
   display: -webkit-box;
   height: 4.5em;
   line-height: 1.5;
