@@ -13,23 +13,27 @@
     <div class="row">
 
         <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             
             <!-- Post Head -->
             <div class="post-head mb-4">
 
                 <!-- Title -->
-                <h1 class="post-title my-4"><%= postWithUser.title %></h1>
+                <h3 class="post-title my-5"><%= postWithUser.title %></h3>
 
                 <!-- Date/Time & Author -->
-                <p>Posted on <%= postWithUser.create_date %> by <%= postWithUser.nickname %> | Watched <%= postWithUser.views %> times</p>
+                <p class="text-muted">
+                    <small>
+                      <i class="far fa-clock"></i> <%= postWithUser.create_date.split(' ')[0] %>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-user"></i> <%= postWithUser.nickname %>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-eye"></i> <%= postWithUser.views %>                  
+                    </small>
+                </p>
 
             </div>
 
             <hr>
 
             <!-- Post Body -->
-            <div class="my-4">
+            <div class="my-5">
 
                 <!-- Post Content -->
                 <%- postWithUser.content %>
@@ -46,16 +50,10 @@
                     </div>
                 </div>
             <% } %>
-            <h5 class="mt-5">Comments<%- (commentNum>0)?` <small>(${commentNum})</small>`:`` %></h5>
+
+            <h5 class="mt-5">Comments<%- (commentNum>0)?` <small class="text-muted">(${commentNum})</small>`:`` %></h5>
+
             <hr>
-            <!-- Comments Content -->
-            <% commentsWithUser.forEach( (commentWithUser) => { %>
-                <%- include('./partials/comment-show', {
-                    postWithUser: postWithUser,
-                    commentWithUser: commentWithUser
-                }); %>
-                <hr>
-            <% }); %>
 
             <!-- Comments Form -->
             <div class="card my-4">
@@ -70,13 +68,15 @@
                 </div>
             </div>
 
-        </div>
+            <!-- Comments Content -->
+            <% commentsWithUser.forEach( (commentWithUser) => { %>
+                <%- include('./partials/comment-show', {
+                    postWithUser: postWithUser,
+                    commentWithUser: commentWithUser
+                }); %>
+                <hr>
+            <% }); %>
 
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-          <%- include('../widgets/search') %>
-          <%- include('../widgets/category') %>
-          <%- include('../widgets/side') %>
         </div>
 
       </div>
