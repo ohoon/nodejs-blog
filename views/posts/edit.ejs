@@ -5,6 +5,7 @@
     <title>Ohoon's Blog</title>
 
     <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
+    <script src="/js/ckeditor.js"></script>
   </head>
   <body>
     <%- include('../partials/nav') %>
@@ -44,13 +45,6 @@
               <div class="col-md-12 mb-3">
                 <label for="content">Content</label>
                 <textarea class="form-control" id="content" name="content" placeholder=""><%= (inputDatas)?(inputDatas.content)?inputDatas.content:'':postWithUser.content %></textarea>
-                <script>
-                  ClassicEditor
-                      .create( document.querySelector( '#content' ) )
-                      .catch( err => {
-                          console.error( err );
-                      } );
-                </script>
               </div>
             </div>
 
