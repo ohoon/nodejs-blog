@@ -10,6 +10,7 @@ const homeRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const commentsRouter = require('./routes/comments');
+const uploadsRouter = require('./routes/uploads');
 
 const session = require('./config/session');
 const flash = require('connect-flash');
@@ -50,6 +51,7 @@ app.use('/', homeRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+app.use('/uploads', uploadsRouter);
 
 // catch 404 and forward to error handler
 app.use( (req, res, next) => {
