@@ -44,7 +44,9 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <img src="/images/no_detail_img.gif" style="filter:brightness(95%);" width="240px" height="170px" alt>
+                <a class="post-title mb-3" href="/posts/<%= postWithUser.id %>">
+                  <img src="<%= postWithUser.thumnail?postWithUser.thumnail:'/images/no_detail_img.gif' %>" style="filter:brightness(95%);" width="240px" height="170px" alt>
+                </a>
               </div>
             </div>
             
