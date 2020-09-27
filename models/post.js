@@ -10,10 +10,9 @@ module.exports = {
         return newPost.insertId;
     },
     find: async (categoryId, page, limit, search) => {
-        let queryText = `SELECT posts.id, title, content, category_id, user_id, nickname, create_date, views FROM posts JOIN users ON user_id=users.id`
+        let queryText = `SELECT p.id, p.title, p.content, p.category_id, p.user_id, u.nickname, p.create_date, p.views FROM posts AS p LEFT JOIN users AS u ON p.user_id=u.id`
         const queryValue = [];
         const offset = (page-1) * limit;
-
 
         if (categoryId > 0) {
             queryText = queryText + ` WHERE category_id=?`;
@@ -33,7 +32,8 @@ module.exports = {
             queryValue.push(offset, limit);
         }
 
-        queryText = `SELECT p.*, COUNT(c.id) AS commentNum FROM (${queryText}) AS p LEFT OUTER JOIN comments AS c ON p.id=c.post_id GROUP BY p.id`;
+        queryText = `SELECT p2.*, f.path AS thumnail FROM (${queryText}) AS p2 LEFT JOIN files AS f ON f.post_id=p2.id GROUP BY p2.id`
+        queryText = `SELECT p3.*, COUNT(c.id) AS commentNum FROM (${queryText}) AS p3 LEFT JOIN comments AS c ON p3.id=c.post_id GROUP BY p3.id`;
 
         const postsWithUser = await db.query(
             queryText,
