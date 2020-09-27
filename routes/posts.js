@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const postDao = require('../models/Post');
 const commentDao = require('../models/Comment');
+const fileDao = require('../models/File');
 const control = require('../utils/control');
 const input = require('../utils/input');
 const structure = require('../utils/structure');
@@ -27,12 +28,14 @@ router.get('/', async (req, res, next) => {
 router.post('/',
   control.isLoggedIn,
   input.checkCreatePost,
+  input.getImageUrls,
   (req, res, next) => {
     req.body.user_id = req.user[0].id;
     next();
   },
   async (req, res, next) => {
     const postId = await postDao.create(req.body);
+    await fileDao.assign(postId, req.body.images);
     res.redirect(`/posts/${postId}`);
   }
 );
@@ -70,12 +73,15 @@ router.put('/:postId',
   control.isLoggedIn,
   control.checkAuthorPermission,
   input.checkEditPost,
+  input.getImageUrls,
   (req, res, next) => {
     req.body.post_id = req.params.postId;
     next();
   },
   async (req, res, next) => {
     await postDao.modify(req.body);
+    await fileDao.unassign(req.params.postId);
+    await fileDao.assign(req.params.postId, req.body.images);
     res.redirect(`/posts/${req.params.postId}`);
   }
 );
@@ -100,6 +106,7 @@ router.delete('/:postId',
   control.checkAuthorPermission,
   async (req, res, next) => {
     await postDao.destroy(req.params.postId);
+    await fileDao.unassign(req.params.postId);
     res.redirect(`/posts/`);
   }
 );
