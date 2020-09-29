@@ -29,4 +29,14 @@ router.get('/signup', (req, res, next) => {
   });
 });
 
+/* Edit Form. */
+router.get('/:userId', async (req, res, next) => {
+  const users = await userDao.findById(req.params.userId);
+  res.render('users/edit', {
+    user: users[0],
+    inputDatas: req.flash('inputDatas')[0],
+    inputErrors: req.flash('inputErrors')[0]
+  });
+});
+
 module.exports = router;
