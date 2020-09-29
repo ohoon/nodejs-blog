@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <title>Ohoon's Blog</title>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Create Form -->
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3 my-4">My Account</h4>
+
+          <hr class="mb-4">
+
+          <form action="/users/<%= user.id %>?_method=put" method="post">
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="username">Username <small>(5-20 words)</small></label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<%= user.username %>" readonly>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="password">New Password <small>(8-40 words)</small></label>
+                <input type="password" class="form-control<%= (inputErrors)&&(inputErrors.password)?' is-invalid':'' %>" id="password" name="password" placeholder="Password"<%= (inputErrors)&&(inputErrors.password)?' autofocus':'' %>>
+                <div class="invalid-feedback">
+                  <%= (inputErrors)&&(inputErrors.password)?inputErrors.password:'' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="password_confirm">Confirm Password</label>
+                <input type="password" class="form-control<%= (inputErrors)&&(inputErrors.confirm_password)?' is-invalid':'' %>" id="confirm_password" name="confirm_password" placeholder="Confirm Password"<%= (inputErrors)&&(inputErrors.confirm_password)?' autofocus':'' %>>
+                <div class="invalid-feedback">
+                  <%= (inputErrors)&&(inputErrors.confirm_password)?inputErrors.confirm_password:'' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="nickname">Nickname</label>
+                <input type="text" class="form-control<%= (inputErrors)&&(inputErrors.nickname)?' is-invalid':'' %>" id="nickname" name="nickname" placeholder="Nickname" value="<%= (inputDatas)&&(inputDatas.nickname)?inputDatas.nickname:user.nickname %>"<%= (inputErrors)&&(inputErrors.nickname)?' autofocus':'' %>>
+                <div class="invalid-feedback">
+                  <%= (inputErrors)&&(inputErrors.nickname)?inputErrors.nickname:'' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-4">
+                <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="YourEmailId@example.com" value="<%= (inputDatas)&&(inputDatas.email)?inputDatas.email:(user.email)?user.email:'' %>">
+              </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <div class="row my-4">
+              <button class="btn btn-primary btn-lg btn-block mb-4" type="submit">MODIFY</button>
+            </div>
+            
+          </form>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
