@@ -43,6 +43,25 @@ module.exports = {
 
     next();
   },
+  checkEditUser: (req, res, next) => {
+    if (req.body.password && req.body.password.length < 8 || req.body.password.length > 40) {
+      req.flash('inputDatas', req.body);
+      req.flash('inputErrors', { password: 'Password should be 8-40 words.' });
+      return res.redirect(`/users/${req.params.userId}`);
+    }
+    if (req.body.password !== req.body.confirm_password) {
+      req.flash('inputDatas', req.body);
+      req.flash('inputErrors', { confirm_password: 'Password and Confirm Password should be same.' });
+      return res.redirect(`/users/${req.params.userId}`);
+    }
+    if (!req.body.nickname) {
+      req.flash('inputDatas', req.body);
+      req.flash('inputErrors', { nickname: 'Nickname is required.' });
+      return res.redirect(`/users/${req.params.userId}`);
+    }
+
+    next();
+  },
   checkCreatePost: (req, res, next) => {
     if (!req.body.title) {
       req.flash('inputDatas', req.body);
