@@ -9,6 +9,14 @@ module.exports = {
         }
         next();
     },
+    checkUserPermission: (req, res, next) => {
+        const userId = req.params.userId;
+
+        if (userId != req.user[0].id) {
+            return res.redirect('/');
+        }
+        next();
+    },
     checkAuthorPermission: async (req, res, next) => {
         const postsWithUser = await postDao.read(req.params.postId);
         const userId = postsWithUser[0].user_id;
