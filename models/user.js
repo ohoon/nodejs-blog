@@ -25,4 +25,21 @@ module.exports = {
 
         return users;
     },
+    modify: async (body) => {
+        let queryText = `UPDATE users SET `;
+        const queryValue = [];
+
+        if (body.password) {
+            queryText = queryText + `password=?, `;
+            queryValue.push(body.password);
+        }
+
+        queryText = queryText + `nickname=?, email=? WHERE id=?`;
+        queryValue.push(body.nickname, body.email, body.user_id);
+
+        await db.query(
+            queryText
+            , queryValue
+        );
+    },
 }
