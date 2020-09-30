@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userDao = require('../models/User');
+const control = require('../utils/control');
 const input = require('../utils/input');
 const crypt = require('../utils/crypt');
 
@@ -29,14 +30,34 @@ router.get('/signup', (req, res, next) => {
   });
 });
 
-/* Edit Form. */
-router.get('/:userId', async (req, res, next) => {
-  const users = await userDao.findById(req.params.userId);
-  res.render('users/edit', {
-    user: users[0],
-    inputDatas: req.flash('inputDatas')[0],
-    inputErrors: req.flash('inputErrors')[0]
-  });
-});
+/* Edit User Form. */
+router.get('/:userId',
+  control.isLoggedIn,
+  control.checkUserPermission,
+  async (req, res, next) => {
+    const users = await userDao.findById(req.params.userId);
+    res.render('users/edit', {
+      user: users[0],
+      inputDatas: req.flash('inputDatas')[0],
+      inputErrors: req.flash('inputErrors')[0]
+    });
+  }
+);
+
+/* Edit User. */
+router.put('/:userId',
+  control.isLoggedIn,
+  control.checkUserPermission,
+  input.checkEditUser,
+  crypt.encryptPassword,
+  (req, res, next) => {
+    req.body.user_id = req.params.userId;
+    next();
+  },
+  async (req, res, next) => {
+    await userDao.modify(req.body);
+    res.redirect('/');
+  }
+);
 
 module.exports = router;
