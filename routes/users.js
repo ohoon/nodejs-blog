@@ -4,6 +4,8 @@ const userDao = require('../models/User');
 const control = require('../utils/control');
 const input = require('../utils/input');
 const crypt = require('../utils/crypt');
+const multer = require('multer');
+const uploadProfile = multer({ dest: 'public/uploads/profiles/' });
 
 /* Sign Up User. */
 router.post('/',
@@ -48,10 +50,12 @@ router.get('/:userId',
 router.put('/:userId',
   control.isLoggedIn,
   control.checkUserPermission,
+  uploadProfile.single('profile'),
   input.checkEditUser,
   crypt.encryptPassword,
   (req, res, next) => {
     req.body.user_id = req.params.userId;
+    req.body.profile = req.file ? req.file.path.slice(6) : undefined;
     next();
   },
   async (req, res, next) => {
