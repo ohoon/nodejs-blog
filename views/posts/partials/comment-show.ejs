@@ -1,6 +1,6 @@
 <div id="comment-<%= commentWithUser.id %>"<%= (inputErrors)&&(inputErrors.comment)&&(inputErrors.parent)&&(inputErrors.parent == commentWithUser.id)?' class=comment-reply-enabled':'' %>>
     <div class="media">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <img class="d-flex mr-3 rounded-circle" src="<%= commentWithUser.profile?commentWithUser.profile:'/images/default_profile.png' %>" width="50px" height="50px" alt>
         <div class="media-body">
             <% if (!commentWithUser.isDeleted) { %>
                 <% if (isAuthenticated) { %>
