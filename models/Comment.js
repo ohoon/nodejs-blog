@@ -8,7 +8,7 @@ module.exports = {
     },
     find: async (postId) => {
         const commentsWithUser = await db.query(
-            `SELECT comments.id, content, user_id, nickname, parent_comment_id, isDeleted, create_date FROM comments JOIN users ON user_id=users.id WHERE post_id=? ORDER BY create_date ASC`
+            `SELECT comments.id, content, user_id, nickname, profile, parent_comment_id, isDeleted, create_date FROM comments JOIN users ON user_id=users.id WHERE post_id=? ORDER BY create_date ASC`
             , [postId]
         );
         
