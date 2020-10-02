@@ -34,6 +34,11 @@ module.exports = {
             queryValue.push(body.password);
         }
 
+        if (body.profile) {
+            queryText = queryText + `profile=?, `;
+            queryValue.push(body.profile);
+        }
+
         queryText = queryText + `nickname=?, email=? WHERE id=?`;
         queryValue.push(body.nickname, body.email, body.user_id);
 
