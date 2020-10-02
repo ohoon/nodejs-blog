@@ -18,7 +18,7 @@
 
           <hr class="mb-4">
 
-          <form action="/users/<%= user.id %>?_method=put" method="post">
+          <form action="/users/<%= user.id %>?_method=put" enctype="multipart/form-data" method="post">
 
             <div class="row">
               <div class="col-md-3 mb-3">
@@ -61,6 +61,13 @@
               <div class="col-md-5 mb-4">
                 <label for="email">Email <span class="text-muted">(Optional)</span></label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="YourEmailId@example.com" value="<%= (inputDatas)&&(inputDatas.email)?inputDatas.email:(user.email)?user.email:'' %>">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-4">
+                <label for="profile">Profile Image <span class="text-muted">(Optional)</span></label>
+                <input type="file" accept="image/*" id="profile" name="profile">
               </div>
             </div>
 
