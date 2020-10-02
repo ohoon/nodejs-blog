@@ -44,7 +44,7 @@ module.exports = {
     next();
   },
   checkEditUser: (req, res, next) => {
-    if (req.body.password && req.body.password.length < 8 || req.body.password.length > 40) {
+    if (req.body.password && (req.body.password.length < 8 || req.body.password.length > 40)) {
       req.flash('inputDatas', req.body);
       req.flash('inputErrors', { password: 'Password should be 8-40 words.' });
       return res.redirect(`/users/${req.params.userId}`);
