@@ -53,4 +53,11 @@ router.get('/logout',
   }
 );
 
+/* Chat Room */
+router.get('/chat',
+  (req, res, next) => {
+    res.render('home/chat');
+  }
+);
+
 module.exports = router;
