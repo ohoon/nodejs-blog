@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <title>Ohoon's Blog</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <header class="py-5 bg-image-full" style="background-image: url('/images/banner.jpg');">
+      <div class="py-5 container">
+        <h1>웹개발 공부 블로그</h1>
+        <p class="lead">Web Development Study Blog</p>
+      </div>
+    </header>
+    
+    <!-- Page Content -->
+    <div class="container my-4">
+
+      <div class="row">
+
+        <!-- Chat Room Column -->
+        <div class="col-md-12">
+
+          <h1 class="my-4">
+            <small>Chat Room</small>
+          </h1>
+
+          <hr class="mb-4">
+
+          <!-- Chat Box -->
+          <div class="row">
+            <div class="col-md-12">
+              <textarea class="form-control" id="chatLog" name="chatLog" rows="15" readonly></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <form id="chat">
+                <div class="input-group">
+                  <div class="input-group-prepend" style="width: 10%">
+                    <input type="text" class="form-control" id="nickname" name="nickname" readonly>
+                  </div>
+                  <input type="text" class="form-control" id="message" name="message" style="width: 80%">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-outline-secondary" id="send" name="send">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <%- include('../partials/footer') %>
+    <script>
+      const socket = io();
+      $('#chat').on('submit', (e) => {
+        if ($('#message').val()) {
+          socket.emit('send message', $('#nickname').val(), $('#message').val());
+          $('#message').val('');
+        }
+        $('#message').focus();
+        e.preventDefault();
+      });
+      socket.on('receive message', (msg) => {
+        $('#chatLog').append(msg+'\n');
+        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+      });
+      socket.on('set nickname', (nickname) => {
+        $('#nickname').val(nickname);
+      });
+    </script>
+  </body>
+</html>
