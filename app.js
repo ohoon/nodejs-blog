@@ -17,6 +17,9 @@ const flash = require('connect-flash');
 const passport = require('./config/passport');
 const app = express();
 
+// socket.io setup
+app.io = require('socket.io')();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -67,6 +70,24 @@ app.use( (err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+// socket event handler
+let count = 1;
+app.io.on('connection', (socket) => {
+  console.log('user connected: ', socket.id);
+  const nickname = "guest" + count++;
+  app.io.to(socket.id).emit('set nickname',nickname);
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected: ', socket.id);
+  });
+
+  socket.on('send message', (nickname, text) => {
+    const msg = nickname + ' : ' + text;
+    console.log(msg);
+    app.io.emit('receive message', msg);
+  });
 });
 
 module.exports = app;
