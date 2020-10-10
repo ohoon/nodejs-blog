@@ -73,18 +73,31 @@ app.use( (err, req, res, next) => {
 });
 
 // socket event handler
+const userList = {};
 let count = 1;
 app.io.on('connection', (socket) => {
   console.log('user connected: ', socket.id);
-  const nickname = "guest" + count++;
-  app.io.to(socket.id).emit('set nickname',nickname);
+
+  socket.on('not loggined', () => {
+    const nickname = "guest" + count++;
+    userList[socket.id] = nickname;
+    app.io.to(socket.id).emit('set nickname', nickname);
+    app.io.emit('receive userList', Object.values(userList));
+  });
+
+  socket.on('loggined', (nickname) => {
+    userList[socket.id] = nickname;
+    app.io.emit('receive userList', Object.values(userList));
+  });
 
   socket.on('disconnect', () => {
     console.log('user disconnected: ', socket.id);
+    delete userList[socket.id];
+    app.io.emit('receive userList', Object.values(userList));
   });
 
   socket.on('send message', (nickname, text) => {
-    const msg = nickname + ' : ' + text;
+    const msg = nickname + ': ' + text;
     console.log(msg);
     app.io.emit('receive message', msg);
   });
