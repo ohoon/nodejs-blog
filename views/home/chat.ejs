@@ -33,9 +33,9 @@
           <div class="row">
             <div class="col-md-12">
               <div class="input-group">
-                <textarea class="form-control" id="chatLog" name="chatLog" rows="15" style="width: 75%" readonly></textarea>
+                <textarea class="form-control" id="chatLog" name="chatLog" rows="15" style="width: 75%" disabled></textarea>
                 <div class="input-group-append">
-                  <textarea class="form-control" id="chatUserList" name="chatUserList" rows="15" readonly></textarea>
+                  <textarea class="form-control" id="chatUserList" name="chatUserList" rows="15" disabled></textarea>
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
               <form id="chat">
                 <div class="input-group">
                   <div class="input-group-prepend" style="width: 10%">
-                    <input type="text" class="form-control" id="nickname" name="nickname" value="<%= currentUser?currentUser.nickname:'' %>" readonly>
+                    <input type="text" class="form-control" id="nickname" name="nickname" value="<%= currentUser?currentUser.nickname:'' %>" disabled>
                   </div>
                   <input type="text" class="form-control" id="message" name="message" style="width: 80%">
                   <div class="input-group-append">
@@ -85,6 +85,14 @@
 
       socket.on('set nickname', (nickname) => {
         $('#nickname').val(nickname);
+      });
+
+      socket.on('new connection exists', () => {
+        console.log("new connect!");
+        $('#message').val("다른 곳에서 접속을 시도하여 채팅이 종료됩니다.");
+        $('#message').attr("disabled", true);
+        $('#send').attr("disabled", true);
+        socket.disconnect();
       });
 
       socket.on('receive userList', (userList) => {
