@@ -86,6 +86,11 @@ app.io.on('connection', (socket) => {
   });
 
   socket.on('loggined', (nickname) => {
+    if (Object.values(userList).indexOf(nickname) > -1) {
+      const oldSocketId = Object.keys(userList).find(key => userList[key] === nickname);
+      app.io.to(oldSocketId).emit('new connection exists');
+    }
+
     userList[socket.id] = nickname;
     app.io.emit('receive userList', Object.values(userList));
   });
