@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const categoryDao = require('./models/Category');
+const chatDao = require('./models/Chat');
+
 const homeRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
@@ -75,8 +77,10 @@ app.use( (err, req, res, next) => {
 // socket event handler
 const userList = {};
 let count = 1;
-app.io.on('connection', (socket) => {
+app.io.on('connection', async (socket) => {
   console.log('user connected: ', socket.id);
+  const log = await chatDao.read();
+  app.io.to(socket.id).emit('chatLog is loaded', log);
 
   socket.on('not loggined', () => {
     const nickname = "guest" + count++;
@@ -102,6 +106,7 @@ app.io.on('connection', (socket) => {
   });
 
   socket.on('send message', (nickname, text) => {
+    chatDao.create(nickname, text);
     const msg = nickname + ': ' + text;
     console.log(msg);
     app.io.emit('receive message', msg);
