@@ -78,6 +78,12 @@
         e.preventDefault();
       });
 
+      socket.on('chatLog is loaded', (log) => {
+        console.log(log);
+        const msg = log.forEach(chat => $('#chatLog').append(`${chat.sender}: ${chat.message}\n`));
+        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+      });
+
       socket.on('receive message', (msg) => {
         $('#chatLog').append(msg+'\n');
         $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
